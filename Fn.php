@@ -7,6 +7,8 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Messenger\MessageBus;
 
 /**
+ * @property string       $appName
+ * @property string       $callType     sync/async
  * @property string       $callMethod
  * @property string       $callUrl
  * @property string       $callId
@@ -16,6 +18,8 @@ class Fn
 {
     private function __construct()
     {
+        $this->appName = getenv('FN_APP_NAME');
+        $this->callType = getenv('FN_TYPE');
         $this->callMethod = getenv('FN_METHOD');
         $this->callUrl = getenv('FN_REQUEST_URL');
         $this->callId = getenv('FN_CALL_ID');
