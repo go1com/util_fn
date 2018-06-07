@@ -1,0 +1,17 @@
+{
+  "name": "go1/util_fn",
+  "license": "proprietary",
+  "prefer-stable": true,
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "go1\\util_fn\\": "./"
+    }
+  },
+  "require": {
+    "php": "^7.1",
+    "pimple/pimple": "^v3.2.3",
+    "symfony/http-foundation": "^4.0 | ^3.4",
+    "symfony/messenger": "^4.1"
+  }
+}
