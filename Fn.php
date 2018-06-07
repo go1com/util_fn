@@ -32,16 +32,10 @@ class Fn
 
     public static function run(callable $fn)
     {
-        $me = new FN;
-
-        stream_set_blocking(STDIN, 0);
-        $payload = json_decode(file_get_contents("php://stdin"));
-
-        /** @var MessageBus $bus */
-        $bus = $c['message.bus'];
-
         try {
-            $response = call_user_func($fn, $me, $payload);
+            stream_set_blocking(STDIN, 0);
+            $payload = json_decode(file_get_contents("php://stdin"));
+            $response = call_user_func($fn, $me = new FN, $payload);
         }
         catch (UnauthorizedHttpException $e) {
             $response = [
@@ -53,6 +47,8 @@ class Fn
             ];
         }
 
+        /** @var MessageBus $bus */
+        $bus = $c['message.bus'];
         $bus->dispatch(['eventType' => 'com.go1.response', 'data' => $response]);
     }
 }
