@@ -4,7 +4,6 @@ namespace go1\util_fn;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-use Symfony\Component\Messenger\MessageBus;
 
 /**
  * @property string       $appName
@@ -30,12 +29,17 @@ class Fn
         }
     }
 
-    public static function run(callable $fn)
+    public static function run(callable $fn, callable $paramResolver = null)
     {
         try {
             stream_set_blocking(STDIN, 0);
-            $payload = json_decode(file_get_contents("php://stdin"));
-            $response = call_user_func($fn, $me = new FN, $payload);
+            $params = [$me = new Fn];
+            $extras = call_user_func($paramResolver ?: self::defaultParamResolver());
+            foreach ($extras as $extra) {
+                $params[] = $extra;
+            }
+
+            $response = call_user_func_array($fn, $params);
         }
         catch (UnauthorizedHttpException $e) {
             $response = [
@@ -47,8 +51,15 @@ class Fn
             ];
         }
 
-        /** @var MessageBus $bus */
-        $bus = $c['message.bus'];
-        $bus->dispatch(['eventType' => 'com.go1.response', 'data' => $response]);
+        fwrite(STDOUT, is_scalar($response) ? $response : json_encode($response));
+    }
+
+    private static function defaultParamResolver()
+    {
+        return function () {
+            $payload = json_decode(file_get_contents("php://stdin"));
+
+            return [$payload];
+        };
     }
 }
