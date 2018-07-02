@@ -6,12 +6,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 /**
- * @property string       $appName
- * @property string       $callType     sync/async
- * @property string       $callMethod
- * @property string       $callUrl
- * @property string       $callId
- * @property null|Request $request
+ * @property-read string       $appName
+ * @property-read string       $callType     sync/async
+ * @property-read string       $callMethod
+ * @property-read string       $callUrl
+ * @property-read string       $callId
+ * @property-read null|Request $request
  */
 class Fn
 {
