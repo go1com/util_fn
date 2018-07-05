@@ -29,17 +29,12 @@ class Fn
         }
     }
 
-    public static function run(callable $fn, callable $paramResolver = null)
+    public static function run(callable $callback, callable $paramResolver = null)
     {
         try {
             stream_set_blocking(STDIN, 0);
-            $params = [$me = new Fn];
-            $extras = call_user_func($paramResolver ?: self::defaultParamResolver());
-            foreach ($extras as $extra) {
-                $params[] = $extra;
-            }
-
-            $response = call_user_func_array($fn, $params);
+            $params = call_user_func($paramResolver ?: self::defaultParamResolver(), $me = new Fn);
+            $response = call_user_func_array($callback, $params);
         }
         catch (UnauthorizedHttpException $e) {
             $response = [
@@ -56,10 +51,8 @@ class Fn
 
     private static function defaultParamResolver()
     {
-        return function () {
-            $payload = json_decode(file_get_contents("php://stdin"));
-
-            return [$payload];
+        return function (Fn $fn) {
+            return [$fn, json_decode(file_get_contents("php://stdin"))];
         };
     }
 }

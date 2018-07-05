@@ -13,8 +13,9 @@ Fn::run(
 
         return "[example.2] Hello {$payload->name}! It's $time.\n";
     },
-    function () {
+    function (Fn $fn) {
         return [
+            $fn,
             json_decode(file_get_contents("php://stdin")),
             new DateTime(),
         ];
