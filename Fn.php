@@ -15,6 +15,8 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
  */
 class Fn
 {
+    static $paramsResolver = null;
+
     private function __construct()
     {
         $this->appName = getenv('FN_APP_NAME');
@@ -33,7 +35,8 @@ class Fn
     {
         try {
             stream_set_blocking(STDIN, 0);
-            $params = call_user_func($paramResolver ?: self::defaultParamResolver(), $me = new Fn);
+            $params = is_null(self::$paramsResolver) ? ($paramResolver ?: self::defaultParamResolver()) : self::$paramsResolver;
+            $params = call_user_func($params, new Fn);
             $response = call_user_func_array($callback, $params);
         }
         catch (UnauthorizedHttpException $e) {
@@ -46,7 +49,9 @@ class Fn
             ];
         }
 
-        fwrite(STDOUT, is_scalar($response) ? $response : json_encode($response));
+        return is_null(self::$paramsResolver)
+            ? fwrite(STDOUT, is_scalar($response) ? $response : json_encode($response))
+            : $response;
     }
 
     private static function defaultParamResolver()
