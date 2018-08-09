@@ -3,9 +3,10 @@ FN (function) [![Build Status](https://travis-ci.org/go1com/util_fn.svg?branch=m
 
 Simple library to build tiny PHP application:
 
-- Input: stdIn
-- Output: stdOut
-- Don't need complex HTTP server, RESTful things.
+- **Input:** stdIn
+- **Output:** stdOut
+- No HTTP server.
+- No RESTful.
 
 ## Usage
 
