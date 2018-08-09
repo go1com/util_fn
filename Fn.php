@@ -41,14 +41,14 @@ class Fn
         } catch (RetriableException $e) {
             $response = [
                 'type'    => 'error',
-                'code'    => $e->getCode() ?: 500,
+                'code'    => $e->getCode(),
                 'message' => $e->getMessage(),
                 'trace'   => $e->getTrace(),
             ];
         } catch (NonretriableException $e) {
             $response = [
                 'type'    => 'error',
-                'code'    => $e->getCode() ?: 400,
+                'code'    => $e->getCode(),
                 'message' => $e->getMessage(),
                 'trace'   => $e->getTrace(),
             ];
