@@ -43,14 +43,14 @@ class Fn
                 'type'    => 'error',
                 'code'    => $e->getCode(),
                 'message' => $e->getMessage(),
-                # 'trace'   => $e->getTrace(),
+                'trace'   => $e->getTrace(),
             ];
         } catch (NonretriableException $e) {
             $response = [
                 'type'    => 'error',
                 'code'    => $e->getCode(),
                 'message' => $e->getMessage(),
-                # 'trace'   => $e->getTrace(),
+                'trace'   => $e->getTrace(),
             ];
         } catch (UnauthorizedHttpException $e) {
             $response = [
