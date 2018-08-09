@@ -11,5 +11,8 @@
   "require": {
     "php": "^7.2",
     "symfony/http-foundation": "^4.0 | ^3.4"
+  },
+  "require-dev": {
+    "symfony/routing": "^v4.1.3"
   }
 }
