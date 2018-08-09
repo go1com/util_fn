@@ -14,10 +14,25 @@ class AppTest extends TestCase
             'paths' => [
                 '/hello'      => ['get' => ['operationId' => __DIR__ . '/../examples/swagger-app/hello.php']],
                 '/bye/{name}' => ['get' => ['operationId' => __DIR__ . '/../examples/swagger-app/bye.php']],
+                '/error'      => ['post' => ['operationId' => __DIR__ . '/../examples/swagger-app/error-runtime.php']],
+                '/panic'      => ['delete' => ['operationId' => __DIR__ . '/../examples/swagger-app/error-panic.php']],
             ],
         ]);
 
-        $this->assertEquals('Hello!', $app->handle(Request::create('/hello')));
-        $this->assertEquals('Bye John!', $app->handle(Request::create('/bye/John')));
+        $hello = $app->handle(Request::create('/hello'));
+        $this->assertEquals(200, $hello->getStatusCode());
+        $this->assertContains('Hello!', $hello->getContent());
+
+        $bye = $app->handle(Request::create('/bye/John'));
+        $this->assertEquals(200, $bye->getStatusCode());
+        $this->assertContains('Bye John!', $bye->getContent());
+
+        $error = $app->handle(Request::create('/error', 'POST'));
+        $this->assertEquals(500, $error->getStatusCode());
+        $this->assertContains('Retry later please!', $error->getContent());
+
+        $panic = $app->handle(Request::create('/panic', 'DELETE'));
+        $this->assertEquals(400, $panic->getStatusCode());
+        $this->assertContains('Panic!', $panic->getContent());
     }
 }

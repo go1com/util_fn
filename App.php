@@ -2,6 +2,7 @@
 
 namespace go1\util_fn;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -58,6 +59,17 @@ class App
         $return = require $params['_swagger']['operationId'];
         Fn::$paramsResolver = $paramsResolver;
 
-        return $return;
+        if (is_array($return)) {
+            if (!empty($return['type']) && ('error' === $return['type'])) {
+                if (!empty($return['code'])) {
+                    $code = $return['code'];
+                    unset($return['code']);
+
+                    return new JsonResponse($return, $code);
+                }
+            }
+        }
+
+        return new JsonResponse($return);
     }
 }
