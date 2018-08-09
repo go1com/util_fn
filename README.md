@@ -1,4 +1,4 @@
-FN (function)
+FN (function) [![Build Status](https://travis-ci.org/go1com/util_fn.svg?branch=master)](https://travis-ci.org/go1com/util_fn)
 ====
 
 Simple library to build tiny PHP application.
