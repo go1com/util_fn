@@ -8,7 +8,7 @@ class HelloWorldTest extends TestCase
 {
     public function test()
     {
-        exec('echo \'{"name":"world"}\' | php ' . dirname(__DIR__) . '/examples/example-1.php', $output);
+        exec('echo \'{"name":"world"}\' | php ' . dirname(__DIR__) . '/examples/hello-world.php', $output);
         $this->assertContains('Hello world', $output[0]);
     }
 }

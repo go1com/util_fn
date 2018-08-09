@@ -6,7 +6,7 @@ require __DIR__ . '/../Fn.php';
 
 # Example 2: Service injection
 # ---------------------
-# bash$ echo '{"name":"Andy"}' | php example-2.php
+# bash$ echo '{"name":"Andy"}' | php params-resolver.php
 Fn::run(
     function (Fn $fn, stdClass $payload, DateTime $dt) {
         $time = $dt->format(DATE_ISO8601);

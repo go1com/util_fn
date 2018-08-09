@@ -6,7 +6,7 @@ require __DIR__ . '/../Fn.php';
 
 # Example 1: Receive input & write output.
 # ---------------------
-# bash$ echo '{"name":"Andy"}' | php example-1.php
+# bash$ echo '{"name":"Andy"}' | php hello-world.php
 Fn::run(
     function (Fn $fn, stdClass $payload) {
         return "Hello {$payload->name}!\n";
