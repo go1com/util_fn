@@ -58,7 +58,7 @@ class Fn
                 'code'       => $e->getCode(),
                 'statusCode' => $e->getStatusCode(),
                 'message'    => $e->getMessage(),
-                # 'trace'      => $e->getTrace(),
+                'trace'      => $e->getTrace(),
             ];
         }
 
