@@ -38,14 +38,27 @@ class Fn
             $params = is_null(self::$paramsResolver) ? ($paramResolver ?: self::defaultParamResolver()) : self::$paramsResolver;
             $params = call_user_func($params, new Fn);
             $response = call_user_func_array($callback, $params);
-        }
-        catch (UnauthorizedHttpException $e) {
+        } catch (RetriableException $e) {
             $response = [
-                'error' => [
-                    'status'  => $e->getStatusCode(),
-                    'code'    => $e->getCode(),
-                    'message' => $e->getMessage(),
-                ],
+                'type'    => 'error',
+                'code'    => $e->getCode() ?: 500,
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTrace(),
+            ];
+        } catch (NonretriableException $e) {
+            $response = [
+                'type'    => 'error',
+                'code'    => $e->getCode() ?: 400,
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTrace(),
+            ];
+        } catch (UnauthorizedHttpException $e) {
+            $response = [
+                'type'       => 'http.error',
+                'code'       => $e->getCode(),
+                'statusCode' => $e->getStatusCode(),
+                'message'    => $e->getMessage(),
+                'trace'      => $e->getTrace(),
             ];
         }
 
