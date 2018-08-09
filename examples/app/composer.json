@@ -1,6 +1,7 @@
 {
   "name":    "acme/fn-app",
   "require": {
-    "go1/util_app": "dev-master"
+    "go1/util_app": "dev-master",
+    "symfony/routing": "^v4.1.3"
   }
 }
