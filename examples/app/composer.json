@@ -1,0 +1,6 @@
+{
+  "name":    "acme/fn-app",
+  "require": {
+    "go1/util_app": "dev-master"
+  }
+}

@@ -10,14 +10,8 @@ class AppTest extends TestCase
 {
     public function test()
     {
-        $app = App::create([
-            'paths' => [
-                '/hello'      => ['get' => ['operationId' => __DIR__ . '/../examples/swagger-app/hello.php']],
-                '/bye/{name}' => ['get' => ['operationId' => __DIR__ . '/../examples/swagger-app/bye.php']],
-                '/error'      => ['post' => ['operationId' => __DIR__ . '/../examples/swagger-app/error-runtime.php']],
-                '/panic'      => ['delete' => ['operationId' => __DIR__ . '/../examples/swagger-app/error-panic.php']],
-            ],
-        ]);
+        /** @var App $app */
+        $app = require __DIR__ . '/../examples/app/index.php';
 
         $hello = $app->handle(Request::create('/hello'));
         $this->assertEquals(200, $hello->getStatusCode());
