@@ -9,6 +9,6 @@ require __DIR__ . '/../Fn.php';
 # bash$ echo '{"name":"Andy"}' | php example-1.php
 Fn::run(
     function (Fn $fn, stdClass $payload) {
-        return "[example.1] Hello {$payload->name}!\n";
+        return "Hello {$payload->name}!\n";
     }
 );

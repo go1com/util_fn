@@ -11,13 +11,13 @@ Fn::run(
     function (Fn $fn, stdClass $payload, DateTime $dt) {
         $time = $dt->format(DATE_ISO8601);
 
-        return "[example.2] Hello {$payload->name}! It's $time.\n";
+        return "Hello {$payload->name}! It's $time.\n";
     },
     function (Fn $fn) {
         return [
             $fn,
             json_decode(file_get_contents("php://stdin")),
-            new DateTime(),
+            new DateTime,
         ];
     }
 );
