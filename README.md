@@ -1,7 +1,11 @@
 FN (function)
 ====
 
-Simple library to build tiny PHP application.
+Simple library to build tiny PHP application:
+
+- Input: stdIn
+- Output: stdOut
+- Don't need complex HTTP server, RESTful things.
 
 ## Usage
 
@@ -10,7 +14,7 @@ Simple library to build tiny PHP application.
 
 go1\util_fn\Fn::run(
     function (go1\util_fn\Fn $fn, stdClass $payload) {
-        return "[example.1] Hello {$payload->name}!\n";
+        return "Hello {$payload->name}!\n";
     }
 );
 ```
