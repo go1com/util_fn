@@ -12,16 +12,8 @@ class AppTest extends TestCase
     {
         $app = App::create([
             'paths' => [
-                '/hello'      => [
-                    'get' => [
-                        'operationId' => __DIR__ . '/../examples/swagger-app/hello/fn.php',
-                    ],
-                ],
-                '/bye/{name}' => [
-                    'get' => [
-                        'operationId' => __DIR__ . '/../examples/swagger-app/bye/fn.php',
-                    ],
-                ],
+                '/hello'      => ['get' => ['operationId' => __DIR__ . '/../examples/swagger-app/hello.php']],
+                '/bye/{name}' => ['get' => ['operationId' => __DIR__ . '/../examples/swagger-app/bye.php']],
             ],
         ]);
 
