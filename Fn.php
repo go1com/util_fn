@@ -34,6 +34,18 @@ class Fn
     public static function run(callable $callback, callable $paramResolver = null)
     {
         try {
+            set_error_handler(
+                function ($code, $string, $file, $errline) {
+                    fwrite(STDERR, json_encode(array_filter([
+                        'uuid'    => defined('EVENT_UUID') ? constant('EVENT_UUID') : '',
+                        'error'   => $code,
+                        'message' => $string,
+                        'file'    => $file,
+                    ])));
+                },
+                E_ALL | E_STRICT
+            );
+
             stream_set_blocking(STDIN, 0);
             $params = is_null(self::$paramsResolver) ? ($paramResolver ?: self::defaultParamResolver()) : self::$paramsResolver;
             $params = call_user_func($params, new Fn);
