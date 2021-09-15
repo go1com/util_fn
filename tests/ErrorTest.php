@@ -2,7 +2,7 @@
 
 namespace go1\util_fn\tests;
 
-use go1\util_fn\Fn;
+use go1\util_fn\FnRunner;
 use go1\util_fn\NonretriableException;
 use go1\util_fn\RetriableException;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +11,7 @@ class ErrorTest extends TestCase
 {
     protected function setUp()
     {
-        Fn::$paramsResolver = function () {
+        FnRunner::$paramsResolver = function () {
             return [];
         };
     }
@@ -22,7 +22,7 @@ class ErrorTest extends TestCase
      */
     public function testInvalid4xx()
     {
-        Fn::run(
+        FnRunner::run(
             function () {
                 throw new NonretriableException('Will have exception!', 123);
             }
@@ -32,7 +32,7 @@ class ErrorTest extends TestCase
     public function test4xx()
     {
         $msg = 'Too bad thing happened.';
-        $out = Fn::run(
+        $out = FnRunner::run(
             function () use ($msg) {
                 throw new NonretriableException($msg);
             }
@@ -50,7 +50,7 @@ class ErrorTest extends TestCase
      */
     public function testInvalid5xx()
     {
-        Fn::run(
+        FnRunner::run(
             function () {
                 throw new RetriableException('Will have exception!', 123);
             }
@@ -60,7 +60,7 @@ class ErrorTest extends TestCase
     public function test5xx()
     {
         $msg = 'Not too bad thing happened.';
-        $out = Fn::run(
+        $out = FnRunner::run(
             function () use ($msg) {
                 throw new RetriableException($msg);
             }

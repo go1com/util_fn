@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
  * @property-read string       $callId
  * @property-read null|Request $request
  */
-class Fn
+class FnRunner
 {
     static $paramsResolver = null;
 
@@ -48,7 +48,7 @@ class Fn
 
             stream_set_blocking(STDIN, 0);
             $params = is_null(self::$paramsResolver) ? ($paramResolver ?: self::defaultParamResolver()) : self::$paramsResolver;
-            $params = call_user_func($params, new Fn);
+            $params = call_user_func($params, new FnRunner);
             $response = call_user_func_array($callback, $params);
         } catch (RetriableException $e) {
             $response = [
@@ -81,7 +81,7 @@ class Fn
 
     private static function defaultParamResolver()
     {
-        return function (Fn $fn) {
+        return function (FnRunner $fn) {
             return [$fn, json_decode(file_get_contents("php://stdin"))];
         };
     }

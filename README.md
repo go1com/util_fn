@@ -13,8 +13,8 @@ Simple library to build tiny PHP application:
 ```php
 <?php
 
-go1\util_fn\Fn::run(
-    function (go1\util_fn\Fn $fn, stdClass $payload) {
+go1\util_fn\FnRunner::run(
+    function (go1\util_fn\FnRunner $fn, stdClass $payload) {
         return "Hello {$payload->name}!\n";
     }
 );
