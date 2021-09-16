@@ -1,13 +1,12 @@
 <?php
 
-use go1\util_fn\Fn;
+use go1\util_fn\FnRunner;
 
-require __DIR__ . '/../Fn.php';
+require __DIR__ . '/../FnRunner.php';
 
-Fn::run(
-    function (Fn $fn) {
+FnRunner::run(
+    function (FnRunner $fn) {
         $foo = $bar; # yeah, we will have error here; not fatal.
-
         return "Hello " . ($foo ?? 'world') . "!\n";
     }
 );
